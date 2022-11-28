@@ -1,0 +1,59 @@
+{
+  "manifest_version": 3,
+  "name": "Gauntlet",
+  "version": "1.0",
+  "description": "Defend easier (but worse than with Reliant) in NationStates.",
+  "author": "Haku",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "https://*.nationstates.net/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.nationstates.net/*"],
+      "exclude_matches": ["https://forum.nationstates.net/*", "https://www.nationstates.net/template-overall=none/*", "https://www.nationstates.net/page=ajax2/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/buttons.js"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/notyf.min.js"],
+      "css": ["css/notyf.min.css"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/helpers.js", "scripts/main.js"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/page=blank/gauntlet=settings"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/settings.js"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/page=ajax2/*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/ajax.js"],
+      "css": ["css/mvp.css"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/template-overall=none/page=reports"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/reports.js"],
+      "css": ["css/mvp.css"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/template-overall=none/region=*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/region.js"],
+      "css": ["css/mvp.css"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "sourceMap": false,
+    "outDir": "build/scripts"
+  },
+  "include": [
+    "src/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/notyf.min"
+  ]
+}
