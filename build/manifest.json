@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Gauntlet",
   "version": "1.0",
-  "description": "Defend easier (but worse than with Reliant) in NationStates.",
+  "description": "Defend easier in NationStates.",
   "author": "Haku",
   "permissions": ["activeTab", "storage"],
   "host_permissions": [
