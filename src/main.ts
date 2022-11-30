@@ -23,11 +23,15 @@ const keybinds: Keybind[] = [
                 const actionButton: HTMLInputElement = document.querySelector('#action');
                 if (actionButton)
                     actionButton.click();
+                else
+                    notyf.error("Action button not yet loaded.")
             } else {
                 const moveButton: HTMLButtonElement =
                     document.querySelector('button[name=move_region]') as HTMLButtonElement;
                 if (moveButton)
                     moveButton.click();
+                else
+                    notyf.error("No move button found. Are you already in the region?")
             }
         },
         modifiedCallback: null
@@ -40,6 +44,8 @@ const keybinds: Keybind[] = [
                 (document.querySelector('button[class="endorse button icon wa"]') as HTMLButtonElement);
             if (endorseButton)
                 endorseButton.click();
+            else
+                notyf.error("No endorse button found.");
         },
         modifiedCallback: async () => {
             if (urlParams['view'] === `region.${await getStorageValue('jp')}`) {
@@ -78,6 +84,8 @@ const keybinds: Keybind[] = [
                 document.querySelector('button[value=add]') as HTMLButtonElement;
             if (dossierButton)
                 dossierButton.click();
+            else
+                notyf.error("Could not add nation to dossier.")
         },
         modifiedCallback: async () => {
             if (urlParams['view'] && (urlParams['view'] !== `region.${await getStorageValue('jp')}`)) {
@@ -120,8 +128,10 @@ const keybinds: Keybind[] = [
             const jumpPoint: string = await getStorageValue('jp');
             if ((urlParams['region'] === jumpPoint) && moveButton)
                 moveButton.click();
-            else if (!(urlParams['region'] === jumpPoint))
+            else if (urlParams['region'] !== jumpPoint)
                 window.location.href = `/template-overall=none/region=${jumpPoint}`;
+            else
+                notyf.error("No move button found. Are you already in your jump point?");
         },
         modifiedCallback: null
     },
@@ -138,6 +148,10 @@ const keybinds: Keybind[] = [
                     (document.querySelector('button[class="endorse button icon wa"]') as HTMLButtonElement);
                 if (endorseButton)
                     endorseButton.click();
+                else
+                    notyf.error("No endorsement button found.")
+            } else {
+                notyf.error("Could not find delegate. Please try again from a region page.")
             }
         },
         modifiedCallback: null
@@ -191,6 +205,8 @@ const keybinds: Keybind[] = [
             if (urlParams['region']) {
                 window.location.href =
                     `/page=ajax2/a=reports/view=region.${urlParams['region']}/filter=move+member+endo`;
+            } else {
+                notyf.error("Could not load region activity. Are you viewing a region page?")
             }
         },
         modifiedCallback: null
@@ -205,8 +221,10 @@ const keybinds: Keybind[] = [
             const jumpPoint: string = await getStorageValue('jp');
             const moveButton: HTMLButtonElement =
                 document.querySelector('button[name=move_region]') as HTMLButtonElement;
-            if (!switchers || !password)
+            if (!switchers || !password) {
+                notyf.error("Could not find switchers and/or password. Have you added them in the Gauntlet settings?")
                 return;
+            }
             const currentSwitcher: number = await getStorageValue('currentswitcher');
             if (urlParams['page'] === 'un' && urlParams['template-overall'] === 'none')
                 (document.querySelector('button[type=submit]') as HTMLButtonElement).click();
