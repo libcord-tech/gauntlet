@@ -157,8 +157,7 @@ const keybinds: Keybind[] = [
             if (urlParams['template-overall'])
                 window.location.href = document.URL.replace('template-overall=none/', '');
             else {
-                window.location.href = `/template-overall=none/
-                ${document.URL.replace('https://www.nationstates.net/', '')}`;
+                window.location.href = `/template-overall=none/${document.URL.replace('https://www.nationstates.net/', '')}`;
             }
         },
         modifiedCallback: null
