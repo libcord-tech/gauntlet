@@ -85,7 +85,7 @@ const keybinds: Keybind[] = [
             if (dossierButton)
                 dossierButton.click();
             else
-                notyf.error("No dossier button found. Are you viewing a nation that is not in your dossier?")
+                notyf.error("No dossier button found. Are you viewing a nation that is already in your dossier?")
         },
         modifiedCallback: async () => {
             if (urlParams['view'] && (urlParams['view'] !== `region.${await getStorageValue('jp')}`)) {
