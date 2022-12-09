@@ -184,12 +184,12 @@ const keybinds: Keybind[] = [
         },
         modifiedCallback: null
     },
-    {
-        functionName: 'appointro',
-        displayName: "Appoint As Regional Officer",
-        callback: () => {},
-        modifiedCallback: null
-    },
+    // {
+    //     functionName: 'appointro',
+    //     displayName: "Appoint As Regional Officer",
+    //     callback: () => {},
+    //     modifiedCallback: null
+    // },
     {
         functionName: 'reports',
         displayName: "Open Reports Page",
