@@ -30,8 +30,11 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 </tr>
 <tr>
 <td><label for="switchers">Switchers</label></td>
-<td><textarea id="switchers"></textarea></td>
+<td><textarea id="switchers" placeholder="Switcher 1\nSwitcher 2\nSwitcher 3"></textarea></td>
 <td><input type="button" class="button" id="set-switchers" value="Set"></td>
+</tr>
+<tr>
+<td colspan="3"><em>Enter one switcher on each line. Switchers must share the same password.</em></td>
 </tr>
 </tbody>
 </table>
