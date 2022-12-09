@@ -108,7 +108,7 @@ async function setPassword(e: MouseEvent): Promise<void>
 async function setSwitchers(e: MouseEvent): Promise<void>
 {
     let switchers: string[] =
-        (document.querySelector('#switchers') as HTMLTextAreaElement).value.split('\n');
+        (document.querySelector('#switchers') as HTMLTextAreaElement).value.split('\n').filter(element => element);
     for (let i = 0; i < switchers.length; i++)
         switchers[i] = canonicalize(switchers[i]);
     await setStorageValue('switchers', switchers);
