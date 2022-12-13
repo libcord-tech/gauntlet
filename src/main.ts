@@ -4,6 +4,8 @@ interface Keybind
     displayName: string | null;
     callback: Function;
     modifiedCallback: Function | null;
+    modifiedCallbackDescription?: string;
+    // will display on settings page as "Hold shift to {modifiedCallbackDescription}."
 }
 
 let notyf = new Notyf({
@@ -66,7 +68,8 @@ const keybinds: Keybind[] = [
                     window.location.href = `/template-overall=none/nation=${nextNation}`;
                 }
             }
-        }
+        },
+        modifiedCallbackDescription: "save nations to cross from a region activity page and then cycle through those nations and endorse them"
     },
     {
         functionName: 'refresh',
@@ -117,7 +120,8 @@ const keybinds: Keybind[] = [
                 await setStorageValue('nationstodossier', nationsToDossier);
                 window.location.href = `/template-overall=none/nation=${nextNation}`;
             }
-        }
+        },
+        modifiedCallbackDescription: "save nations to doss from a region activity page and then cycle through those nations and doss them"
     },
     {
         functionName: 'backtojp',
@@ -184,12 +188,12 @@ const keybinds: Keybind[] = [
         },
         modifiedCallback: null
     },
-    {
-        functionName: 'appointro',
-        displayName: "Appoint As Regional Officer",
-        callback: () => {},
-        modifiedCallback: null
-    },
+    // {
+    //     functionName: 'appointro',
+    //     displayName: "Appoint As Regional Officer",
+    //     callback: () => {},
+    //     modifiedCallback: null
+    // },
     {
         functionName: 'reports',
         displayName: "Open Reports Page",
@@ -262,9 +266,12 @@ const keybinds: Keybind[] = [
                 if (newIndex !== -1) {
                     await setStorageValue('currentswitcher', newIndex);
                     notyf.success(`Synced index with ${urlParams['nation']}`);
+                } else {
+                    notyf.error(`This nation is not in your switchers list. Did you add it in the settings?`)
                 }
             }
-        }
+        },
+        modifiedCallbackDescription: "set the switcher to start prepping from (while viewing its nation page)"
     }
 ];
 

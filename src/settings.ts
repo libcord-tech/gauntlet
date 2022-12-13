@@ -30,8 +30,11 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 </tr>
 <tr>
 <td><label for="switchers">Switchers</label></td>
-<td><textarea id="switchers"></textarea></td>
+<td><textarea id="switchers" placeholder="Switcher 1\nSwitcher 2\nSwitcher 3"></textarea></td>
 <td><input type="button" class="button" id="set-switchers" value="Set"></td>
+</tr>
+<tr>
+<td colspan="3"><em>Enter one switcher on each line. Switchers must share the same password.</em></td>
 </tr>
 </tbody>
 </table>
@@ -63,18 +66,30 @@ async function addKeySetter(keybind: Keybind)
 
     // Set up a table row so that each of the buttons and text fields line up
     const tr: HTMLTableRowElement = document.createElement('tr');
-    const td1: HTMLTableDataCellElement = document.createElement('td');
+    const td1: HTMLTableCellElement = document.createElement('td');
     td1.innerHTML += `<label>${keybind.displayName}</label>`;
-    const td2: HTMLTableDataCellElement = document.createElement('td');
+    const td2: HTMLTableCellElement = document.createElement('td');
     // Give the text field the value of its currently stored key
     td2.innerHTML +=
         `<input type="text" id="${keybind.functionName}-key" value="${await getStorageValue(keybind.functionName) || '?'}">`;
-    const td3: HTMLTableDataCellElement = document.createElement('td');
+    const td3: HTMLTableCellElement = document.createElement('td');
     td3.appendChild(setKeyInput);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
     document.querySelector('#keys').appendChild(tr);
+
+    // Add help text from modifiedCallbackDescription (if any)
+    if (keybind.modifiedCallbackDescription) {
+        const helpTr = document.createElement('tr');
+
+        const helpTd = document.createElement("td");
+        helpTd.colSpan = 3;
+        helpTd.style.paddingBottom = "10px";
+        helpTd.innerHTML = `<em>Hold shift to ${keybind.modifiedCallbackDescription}.</em>`;
+        helpTr.appendChild(helpTd);
+        document.querySelector('#keys').appendChild(helpTr);
+    }
 }
 
 async function setJumpPoint(e: MouseEvent): Promise<void>
@@ -93,7 +108,7 @@ async function setPassword(e: MouseEvent): Promise<void>
 async function setSwitchers(e: MouseEvent): Promise<void>
 {
     let switchers: string[] =
-        (document.querySelector('#switchers') as HTMLTextAreaElement).value.split('\n');
+        (document.querySelector('#switchers') as HTMLTextAreaElement).value.split('\n').filter(element => element);
     for (let i = 0; i < switchers.length; i++)
         switchers[i] = canonicalize(switchers[i]);
     await setStorageValue('switchers', switchers);
