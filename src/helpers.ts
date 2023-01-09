@@ -11,7 +11,7 @@ function pretty(item: string)
 function prettyKey(item?: string)
 {
     if (item == null)
-        return "<none";
+        return "<none>";
     if (item == ' ')
         return "Space";
     if (item.length == 1)
