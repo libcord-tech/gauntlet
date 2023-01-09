@@ -8,6 +8,12 @@ function pretty(item: string)
     return item.substring(0, 1).toUpperCase() + item.substring(1);
 }
 
+async function getKeybindKey(keybind: Keybind): Promise<string | null>
+{
+    var storedVal = await getStorageValue(keybind.functionName);
+    return <string>storedVal || keybind.defaultKey;
+}
+
 async function getStorageValue(key: string): Promise<any>
 {
     return new Promise((resolve, reject) =>

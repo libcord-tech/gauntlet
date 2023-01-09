@@ -2,6 +2,7 @@ interface Keybind
 {
     functionName: string;
     displayName: string | null;
+    defaultKey?: string;
     callback: Function;
     modifiedCallback: Function | null;
     modifiedCallbackDescription?: string;
@@ -20,6 +21,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'move',
         displayName: null,
+        defaultKey: 'M',
         callback: () => {
             if (urlParams['page'] === 'reports') {
                 const actionButton: HTMLInputElement = document.querySelector('#action');
@@ -41,6 +43,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'endorse',
         displayName: null,
+        defaultKey: 'E',
         callback: () => {
             const endorseButton: HTMLButtonElement =
                 (document.querySelector('button[class="endorse button icon wa"]') as HTMLButtonElement);
@@ -74,6 +77,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'refresh',
         displayName: null,
+        defaultKey: 'N',
         callback: () => {
             location.reload();
         },
@@ -82,6 +86,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'dossier',
         displayName: null,
+        defaultKey: 'D',
         callback: () => {
             const dossierButton: HTMLButtonElement =
                 document.querySelector('button[value=add]') as HTMLButtonElement;
@@ -126,6 +131,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'backtojp',
         displayName: "Move Back to Jump Point",
+        defaultKey: 'B',
         callback: async () => {
             const moveButton: HTMLButtonElement =
                 document.querySelector('button[name=move_region]') as HTMLButtonElement;
@@ -142,6 +148,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'endodel',
         displayName: "Endorse WA Delegate",
+        defaultKey: 'W',
         callback: () => {
             const delegate: HTMLAnchorElement =
                 document.querySelector('#regioncontent > p:nth-child(1) > a') as HTMLAnchorElement;
@@ -163,6 +170,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'checkifupdated',
         displayName: "Check If Your Nation Updated",
+        defaultKey: 'U',
         callback: () => {
             window.location.href = '/page=ajax2/a=reports/view=self/filter=change/';
         },
@@ -171,6 +179,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'toggletemplate',
         displayName: "Toggle Template",
+        defaultKey: 'T',
         callback: () => {
             if (urlParams['template-overall'])
                 window.location.href = document.URL.replace('template-overall=none/', '');
@@ -183,6 +192,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'activitypage',
         displayName: "Open Activity Page",
+        defaultKey: 'A',
         callback: () => {
             window.location.href = '/page=activity/view=world/filter=move+member+endo';
         },
@@ -197,6 +207,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'reports',
         displayName: "Open Reports Page",
+        defaultKey: ' ',
         callback: () => {
             window.location.href = '/template-overall=none/page=reports';
         },
@@ -205,6 +216,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'regionajax',
         displayName: "Open Region Ajax2 Page",
+        defaultKey: 'H',
         callback: () => {
             if (urlParams['region']) {
                 window.location.href =
@@ -218,6 +230,7 @@ const keybinds: Keybind[] = [
     {
         functionName: 'prep',
         displayName: null,
+        defaultKey: 'P',
         callback: async () =>
         {
             const switchers = await getStorageValue('switchers');
@@ -294,7 +307,7 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
 {
     for (let i = 0; i < keybinds.length; i++) {
         const currentKeybind: Keybind = keybinds[i];
-        keyFunctions[await getStorageValue(currentKeybind.functionName)] = {
+        keyFunctions[await getKeybindKey(currentKeybind)] = {
             callback: currentKeybind.callback,
             modifiedCallback: currentKeybind.modifiedCallback
         };
