@@ -71,25 +71,21 @@ async function addKeySetter(keybind: Keybind)
     const td2: HTMLTableCellElement = document.createElement('td');
     // Give the text field the value of its currently stored key
     td2.innerHTML +=
-        `<input type="text" id="${keybind.functionName}-key" value="${await getStorageValue(keybind.functionName) || '?'}">`;
+        `<input type="text" id="${keybind.functionName}-key" value="${await getKeybindKey(keybind) || '<none>'}">`;
     const td3: HTMLTableCellElement = document.createElement('td');
     td3.appendChild(setKeyInput);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
-    document.querySelector('#keys').appendChild(tr);
 
     // Add help text from modifiedCallbackDescription (if any)
+    const helpTd = document.createElement("td");
     if (keybind.modifiedCallbackDescription) {
-        const helpTr = document.createElement('tr');
-
-        const helpTd = document.createElement("td");
-        helpTd.colSpan = 3;
-        helpTd.style.paddingBottom = "10px";
         helpTd.innerHTML = `<em>Hold shift to ${keybind.modifiedCallbackDescription}.</em>`;
-        helpTr.appendChild(helpTd);
-        document.querySelector('#keys').appendChild(helpTr);
     }
+    tr.appendChild(helpTd);
+
+    document.querySelector('#keys').appendChild(tr);
 }
 
 async function setJumpPoint(e: MouseEvent): Promise<void>
