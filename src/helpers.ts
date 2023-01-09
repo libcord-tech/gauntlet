@@ -8,6 +8,17 @@ function pretty(item: string)
     return item.substring(0, 1).toUpperCase() + item.substring(1);
 }
 
+function prettyKey(item?: string)
+{
+    if (item == null)
+        return "<none>";
+    if (item == ' ')
+        return "Space";
+    if (item.length == 1)
+        return item.toUpperCase();
+    return item;
+}
+
 async function getKeybindKey(keybind: Keybind): Promise<string | null>
 {
     var storedVal = await getStorageValue(keybind.functionName);

@@ -39,6 +39,12 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 </tbody>
 </table>
 </fieldset>
+<div id="keybind-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Press a key to bind to <span id="keybind-which">KEY</span>...</p>
+    </div>
+</div>
 `;
 
 /**
@@ -51,17 +57,39 @@ async function addKeySetter(keybind: Keybind)
     if (keybind.displayName === null)
         keybind.displayName = pretty(keybind.functionName);
 
-    // Create the "Set" button
-    const setKeyInput: HTMLInputElement = document.createElement('input');
-    setKeyInput.type = 'button';
-    setKeyInput.value = 'Set';
-    setKeyInput.classList.add('button');
-    setKeyInput.addEventListener('click', async (e: MouseEvent): Promise<void> =>
-    {
-        console.log(`Setting ${keybind.functionName}`);
-        const key: string = (document.querySelector(`#${keybind.functionName}-key`) as HTMLInputElement).value
-            .toUpperCase();
-        await setStorageValue(keybind.functionName, key);
+    // input element, which displays the key and allows changing it
+    var inputElement: HTMLInputElement = document.createElement('input');
+    inputElement.readOnly = true;
+    inputElement.type = 'text';
+    inputElement.value = prettyKey(await getKeybindKey(keybind));
+
+    inputElement.addEventListener('click', async (e: MouseEvent): Promise<void> => {
+        // update the text in the modal showing which key we're now binding
+        let which = document.getElementById('keybind-which');
+        which.innerText = keybind.displayName;
+
+        // show the modal
+        let modal = document.getElementById('keybind-modal');
+        modal.style.display = 'block';
+
+        // wait for a keypress (only once)
+        let keyup = async (e: KeyboardEvent) => {
+            if (e.ctrlKey || e.shiftKey || e.metaKey || e.altKey)
+                return;
+            if (modal.style.display == "none") // if the modal was already closed (clicking outside or such), don't do anything
+                return;
+
+            e.preventDefault();
+
+            // set key and update the input element
+            let key = e.key.toUpperCase();
+            await setStorageValue(keybind.functionName, key);
+            inputElement.value = prettyKey(key);
+
+            // hide the modal again
+            modal.style.display = 'none';
+        };
+        window.addEventListener('keyup', keyup, { "once": true });
     });
 
     // Set up a table row so that each of the buttons and text fields line up
@@ -70,13 +98,10 @@ async function addKeySetter(keybind: Keybind)
     td1.innerHTML += `<label>${keybind.displayName}</label>`;
     const td2: HTMLTableCellElement = document.createElement('td');
     // Give the text field the value of its currently stored key
-    td2.innerHTML +=
-        `<input type="text" id="${keybind.functionName}-key" value="${await getKeybindKey(keybind) || '<none>'}">`;
-    const td3: HTMLTableCellElement = document.createElement('td');
-    td3.appendChild(setKeyInput);
+    //td2.innerHTML += `<input type="text" id="${keybind.functionName}-key" value="${await getKeybindKey(keybind) || '<none>'}" readonly>`;
+    td2.appendChild(inputElement);
     tr.appendChild(td1);
     tr.appendChild(td2);
-    tr.appendChild(td3);
 
     // Add help text from modifiedCallbackDescription (if any)
     const helpTd = document.createElement("td");
@@ -132,4 +157,24 @@ async function setSwitchers(e: MouseEvent): Promise<void>
     document.querySelector('#set-jump-point').addEventListener('click', setJumpPoint);
     document.querySelector('#set-prep-password').addEventListener('click', setPassword);
     document.querySelector('#set-switchers').addEventListener('click', setSwitchers);
+
+    // set up modal
+    let modal = document.getElementById('keybind-modal');
+
+    // move modal element for z-order purposes to the body
+    // (otherwise, it won't cover the actual page)
+    modal = document.body.appendChild(modal);    
+
+    // modal close button
+    document.querySelector('.modal .close').addEventListener('click', (e) => {
+        modal.style.display = "none";
+    });
+
+    // clicking anywhere outside of modal also closes it
+    window.addEventListener('click', (e) => {
+        if (e.target == modal)
+            modal.style.display = "none";
+    });
+
+    
 })();
