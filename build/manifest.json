@@ -32,7 +32,8 @@
       "matches": ["https://www.nationstates.net/page=blank/gauntlet=settings"],
       "exclude_matches": ["https://forum.nationstates.net/*"],
       "run_at": "document_idle",
-      "js": ["scripts/settings.js"]
+      "js": ["scripts/settings.js"],
+      "css": ["css/settings.css"]
     },
     {
       "matches": ["https://www.nationstates.net/page=ajax2/*"],
