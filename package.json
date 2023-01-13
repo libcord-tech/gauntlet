@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tsc --watch",
     "build:compile": "npx tsc",
     "build:minify": "run-for-every-file --src ./build/scripts/ --dest ./build/scripts/ --file \"*.js\" --run \"terser {{src-file}} --compress --mangle -o {{src-file}}\"",
     "build": "npm run build:compile && npm run build:minify"
