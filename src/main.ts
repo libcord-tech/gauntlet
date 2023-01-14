@@ -54,6 +54,7 @@ const keybinds: Keybind[] = [
         },
         modifiedCallback: async () => {
             if (urlParams['view'] === `region.${await getStorageValue('jp')}`) {
+                console.log("crossEndoDoss")
                 await crossEndoDoss(true);
             }
             else if (urlParams['nation']) {

@@ -60,15 +60,25 @@ function getUrlParameters(url: string): object
 async function crossEndoDoss(endo: boolean)
 {
     const nations: string[] = [];
-    const lis: NodeList = document.querySelectorAll('li');
-    for (let i = 0; i < lis.length; i++) {
-        const li: HTMLUListElement = lis[i] as HTMLUListElement;
-        const nationName: string = canonicalize(li.querySelector('.nnameblock').innerHTML);
-        if (li.innerHTML.indexOf('was admitted') !== -1)
+    const processedNations = new Set();
+    const lis = document.querySelectorAll('li');
+    lis.forEach((li) => {
+        // ignore non-World Assembly happenings
+        if (!li.textContent.includes("World Assembly"))
+            return;
+        
+        const nationName = canonicalize(li.querySelector('.nnameblock').textContent);
+
+        // only check the most recent World Assembly happening for each nation
+        if (processedNations.has(nationName))
+            return;
+        
+        if (li.textContent.includes("was admitted"))
             nations.push(nationName);
-        else if (li.innerHTML.indexOf('resigned') !== -1)
-            nations.splice(nations.indexOf(nationName), 1);
-    }
+        
+        processedNations.add(nationName);
+    });
+
     if (endo)
         await setStorageValue('nationstoendorse', nations);
     else
