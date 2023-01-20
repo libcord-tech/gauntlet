@@ -286,6 +286,15 @@ const keybinds: Keybind[] = [
             }
         },
         modifiedCallbackDescription: "set the switcher to start prepping from (while viewing its nation page)"
+    },
+    {
+        functionName: 'back',
+        displayName: "Back to Previous Page",
+        defaultKey: ',',
+        callback: () => {
+            history.back();
+        },
+        modifiedCallback: null
     }
 ];
 
