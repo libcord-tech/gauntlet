@@ -4,6 +4,8 @@
 
 Gauntlet is a NationStates tool which binds standard NationStates functionality used for raider/defender gameplay to keys on the keyboard. It has features which make defending easy. It is a successor to the Breeze++ Chrome extension.
 
+**If you just want to get started, [click here.](quick-start.md)**
+
 A brief outline of the features is below.
 
 ## Current Features
