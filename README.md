@@ -3,7 +3,7 @@
 
 It is inspired by and is a successor to Breeze++ as the author no longer has time to maintain it.
 
-**[Read about how to install it and its current features here](https://github.com/paulhaku/gauntlet/tree/feature/docs/documentation)**
+**[Read about how to install it and its current features here](documentation/readme.md)**
 
 ### Planned Features
 - Moving
