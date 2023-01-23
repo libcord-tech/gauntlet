@@ -6,7 +6,7 @@ the key of the feature.
 When looking at a region page, pressing this key will move your nation to the region.
 
 When looking at the reports page,
-pressing this key will refresh the page and click the region the raiders moved to, if applicable.
+pressing this key will click the region the raiders moved to, if applicable, or refresh the page otherwise.
 ## Endorse
 When looking at a nation page, pressing this key will endorse that nation, if possible.
 ### Alternate Functionality
