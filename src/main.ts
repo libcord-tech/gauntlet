@@ -295,6 +295,27 @@ const keybinds: Keybind[] = [
             history.back();
         },
         modifiedCallback: null
+    },
+    {
+        functionName: 'resign',
+        displayName: "Resign from WA",
+        defaultKey: "'",
+        callback: () => {
+            // if not a WA member
+            if (urlParams['page'] === 'un' && document.querySelector("input[value='join_UN']")) {
+                notyf.error("It doesn't seem like you're in the WA.");
+                return;
+            }
+
+            const chkInput: HTMLInputElement | null = document.querySelector("input[name=chk]");
+
+            if (chkInput) {
+                location.assign(`/page=UN_status?action=leave_UN&chk=${chkInput.value}&submit=1`);
+            } else {
+                location.assign("/page=un");
+            }
+        },
+        modifiedCallback: null
     }
 ];
 
