@@ -51,12 +51,8 @@ This feature is identical to the Breeze++ feature.
 ## Open Activity Page
 Pressing this key will open up the world activity feed filtered to `member`, `move`, and `endo`. This page
 can be used to spot for raider activity.
-
-This feature is identical to the Breeze++ feature.
 ## Open Reports Page
 Pressing this key will open up the Reports page.
-
-This feature is identical to the Breeze++ feature.
 ## Open Region Ajax2 Page
 When looking at a **region** page, pressing this key will open up the ajax2 activity feed of that region.
 
