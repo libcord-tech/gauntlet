@@ -25,7 +25,7 @@ A detailed description of each feature can be found [here](keys.md)
 This is where you can set the jump point you will be using. This value is used for selecting where to move puppets
 when prepping and the region to move to when using the "Move Back to Jump Point" key.
 ### Prepping
-In this section, you can set the features used for the "Prep" feature.
+In this section, you can set the information used for the "Prep" feature.
 #### Password
 Set the password you use for your switchers.
 **This password will only be stored in the extension's storage, it won't be sent anywhere (except for NationStates
