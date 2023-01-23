@@ -28,8 +28,8 @@ when prepping and the region to move to when using the "Move Back to Jump Point"
 In this section, you can set the features used for the "Prep" feature.
 #### Password
 Set the password you use for your switchers.
-**This password will only be stored in the extension's storage, it won't be sent anywhere,
-it is only used for logging into your switchers.** Each switcher must have the same password.
+**This password will only be stored in the extension's storage, it won't be sent anywhere (except for NationStates
+servers) it is only used for logging into your switchers.** Each switcher must have the same password.
 #### Switchers
 This section is where you input the names of the switchers you'd like to include as part of your prepping.
 Enter each switcher's name, one per line.
