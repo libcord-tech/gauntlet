@@ -54,7 +54,9 @@ const keybinds: Keybind[] = [
         },
         modifiedCallback: async () => {
             if (urlParams['view'] === `region.${await getStorageValue('jp')}`) {
-                console.log("crossEndoDoss")
+                const returnPage = new URL(location.href);
+                returnPage.searchParams.append("gauntlet-success", "All nations endorsed.")
+                await setStorageValue('endorsereturnpage', returnPage.href);
                 await crossEndoDoss(true);
             }
             else if (urlParams['nation']) {
@@ -65,8 +67,13 @@ const keybinds: Keybind[] = [
                     endorseButton.click();
                 else if (nationsToEndorse.indexOf(urlParams['nation']) !== -1) {
                     const nextNation: string = nationsToEndorse[nationsToEndorse.indexOf(urlParams['nation']) + 1];
-                    if (!nextNation)
+                    if (!nextNation) {
+                        const returnPage = await getStorageValue('endorsereturnpage');
+                        await removeStorageValue('dossierreturnpage');
+                        if (returnPage)
+                            location.assign(returnPage);
                         return;
+                    }
                     nationsToEndorse.splice(nationsToEndorse.indexOf(urlParams['nation']), 1);
                     await setStorageValue('nationstoendorse', nationsToEndorse);
                     window.location.href = `/template-overall=none/nation=${nextNation}`;
@@ -98,6 +105,9 @@ const keybinds: Keybind[] = [
         },
         modifiedCallback: async () => {
             if (urlParams['view'] && (urlParams['view'] !== `region.${await getStorageValue('jp')}`)) {
+                const returnPage = new URL(location.href);
+                returnPage.searchParams.append("gauntlet-success", "All nations added to dossier.")
+                await setStorageValue('dossierreturnpage', returnPage.href);
                 await crossEndoDoss(false);
             }
             else if (urlParams['nation']) {
@@ -108,8 +118,13 @@ const keybinds: Keybind[] = [
                     dossierButton.click();
                 else {
                     const nextNation: string = nationsToDossier[nationsToDossier.indexOf(urlParams['nation']) + 1];
-                    if (!nextNation)
+                    if (!nextNation) {
+                        const returnPage = await getStorageValue('dossierreturnpage');
+                        await removeStorageValue('dossierreturnpage');
+                        if (returnPage)
+                            location.assign(returnPage);
                         return;
+                    }
                     nationsToDossier.splice(nationsToDossier.indexOf(urlParams['nation']), 1);
                     await setStorageValue('nationstodossier', nationsToDossier);
                     window.location.href = `/template-overall=none/nation=${nextNation}`;
@@ -120,8 +135,13 @@ const keybinds: Keybind[] = [
                 const currentNation: string = new RegExp('nation=(.+)$')
                     .exec((document.querySelector('.info > a') as HTMLAnchorElement).href)[1];
                 const nextNation: string = nationsToDossier[nationsToDossier.indexOf(currentNation) + 1];
-                if (!nextNation)
+                if (!nextNation) {
+                    const returnPage = await getStorageValue('dossierreturnpage');
+                    await removeStorageValue('dossierreturnpage');
+                    if (returnPage)
+                        location.assign(returnPage);
                     return;
+                }
                 nationsToDossier.splice(nationsToDossier.indexOf(currentNation), 1);
                 await setStorageValue('nationstodossier', nationsToDossier);
                 window.location.href = `/template-overall=none/nation=${nextNation}`;
@@ -315,6 +335,7 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
 
 (async () =>
 {
+    // Load keybind keys
     for (let i = 0; i < keybinds.length; i++) {
         const currentKeybind: Keybind = keybinds[i];
         keyFunctions[await getKeybindKey(currentKeybind)] = {
@@ -330,5 +351,15 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
     if ((await getStorageValue('switchers') !== undefined) &&
         (await getStorageValue('currentswitcher') === undefined)) {
         await setStorageValue('currentswitcher', 0);
+    }
+
+    // Check query parameters for Gauntlet messages
+    const currentPage = new URL(location.href);
+    if (currentPage.searchParams.has("gauntlet-success")) {
+        notyf.success(currentPage.searchParams.get("gauntlet-success"));
+
+        // remove search param to prevent triggering message again on reload/navigation back to page
+        currentPage.searchParams.delete("gauntlet-success");
+        window.history.pushState({}, '', currentPage); // use pushState to avoid page reload
     }
 })();
