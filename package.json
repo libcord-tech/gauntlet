@@ -13,7 +13,7 @@
   "author": "",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "@types/chrome": "^0.0.164",
+    "@types/chrome": "^0.0.209",
     "run-for-every-file": "^1.1.0",
     "terser": "^5.16.1"
   }

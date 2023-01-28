@@ -56,5 +56,8 @@
       "js": ["scripts/region.js"],
       "css": ["css/mvp.css"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  }
 }
