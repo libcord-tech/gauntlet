@@ -381,6 +381,6 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
 
         // remove search param to prevent triggering message again on reload/navigation back to page
         currentPage.searchParams.delete("gauntlet-success");
-        window.history.pushState({}, '', currentPage); // use pushState to avoid page reload
+        window.history.replaceState({}, '', currentPage); // use replaceState to avoid page reload
     }
 })();
