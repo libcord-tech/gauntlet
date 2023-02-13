@@ -69,7 +69,7 @@ const keybinds: Keybind[] = [
                     const nextNation: string = nationsToEndorse[nationsToEndorse.indexOf(urlParams['nation']) + 1];
                     if (!nextNation) {
                         const returnPage = await getStorageValue('endorsereturnpage');
-                        await removeStorageValue('dossierreturnpage');
+                        await removeStorageValue('endorsereturnpage');
                         if (returnPage)
                             location.assign(returnPage);
                         return;
