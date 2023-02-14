@@ -1,0 +1,15 @@
+img.miniflag {
+  height: 13px;
+}
+
+img.smallflag {
+  height: 26px;
+}
+
+.newflagbox a img {
+  height: 60px;
+}
+
+.regioncoverflag img.rflag {
+  height: 100px;
+}

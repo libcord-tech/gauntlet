@@ -40,7 +40,7 @@
       "exclude_matches": ["https://forum.nationstates.net/*"],
       "run_at": "document_idle",
       "js": ["scripts/ajax.js"],
-      "css": ["css/mvp.css"]
+      "css": ["css/mvp.css", "css/notemplate.css"]
     },
     {
       "matches": ["https://www.nationstates.net/template-overall=none/page=reports"],
@@ -55,6 +55,13 @@
       "run_at": "document_idle",
       "js": ["scripts/region.js"],
       "css": ["css/mvp.css"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/*template-overall=none*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": [],
+      "css": ["css/notemplate.css"]
     }
   ],
   "background": {
