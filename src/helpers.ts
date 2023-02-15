@@ -86,3 +86,9 @@ async function crossEndoDoss(endo: boolean)
     if (nations.length > 0)
         window.location.href = `/template-overall=none/nation=${nations[0]}`;
 }
+
+function login(nation: string, password: string) {
+    document.querySelector<HTMLInputElement>("#loginbox > form input[name=nation]").value = nation;
+    document.querySelector<HTMLInputElement>("#loginbox > form input[name=password]").value = password;
+    document.querySelector<HTMLButtonElement>("#loginbox > form button[name=submit]").click();
+}
