@@ -258,18 +258,15 @@ const keybinds: Keybind[] = [
             else if (urlParams['page'] === 'change_region' || (urlParams['region'] && moveButton === null)) {
                 if (currentSwitcher === (switchers.length - 1)) {
                     await setStorageValue('currentswitcher', 0);
-                    window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[0]}&password=${password}&logging_in=1`;
+                    login(switchers[0], password, "/template-overall=none/page=un");
                 }
                 else {
                     await setStorageValue('currentswitcher', currentSwitcher + 1);
-                    window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1`;
+                    login(switchers[currentSwitcher + 1], password, "/template-overall=none/page=un");
                 }
             }
             else {
-                window.location.href =
-                    `/template-overall=none/page=un?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1`;
+                login(switchers[currentSwitcher], password, "/template-overall=none/page=un");
             }
         },
         modifiedCallback: async () =>

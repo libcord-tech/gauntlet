@@ -86,3 +86,42 @@ async function crossEndoDoss(endo: boolean)
     if (nations.length > 0)
         window.location.href = `/template-overall=none/nation=${nations[0]}`;
 }
+
+function login(nation: string, password: string, redirect: string = "/") {
+    if (document.querySelector("#loginbox:has(input[name=nation], input[name=password], button[name=submit])")) {
+        document.querySelector<HTMLFormElement>("#loginbox > form").action = `${redirect}?x-gauntlet-useragent`;
+        document.querySelector<HTMLInputElement>("#loginbox > form input[name=nation]").value = nation;
+        document.querySelector<HTMLInputElement>("#loginbox > form input[name=password]").value = password;
+        document.querySelector<HTMLButtonElement>("#loginbox > form button[name=submit]").click();
+    } else {
+        const loginForm = document.createElement("form");
+        loginForm.action = `${redirect}?x-gauntlet-useragent`;
+        loginForm.method = "POST";
+        loginForm.target = "_top";
+        loginForm.hidden = true;
+
+        const loggingInInput = document.createElement("input");
+        loggingInInput.name = "logging_in";
+        loggingInInput.value = "1";
+
+        const nationInput = document.createElement("input");
+        nationInput.name = "nation";
+        nationInput.value = nation;
+        nationInput.autocomplete = "off";
+
+        const passwordInput = document.createElement("input");
+        passwordInput.name = "password";
+        passwordInput.type = "password";
+        passwordInput.value = password;
+        passwordInput.autocomplete = "off";
+
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.name = "submit";
+        submitButton.value = "Login";
+
+        loginForm.append(loggingInInput, nationInput, passwordInput, submitButton);
+        document.body.appendChild(loginForm);
+        submitButton.click();
+    }
+}
