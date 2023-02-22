@@ -89,13 +89,13 @@ async function crossEndoDoss(endo: boolean)
 
 function login(nation: string, password: string, redirect: string = "/") {
     if (document.querySelector("#loginbox:has(input[name=nation], input[name=password], button[name=submit])")) {
-        document.querySelector<HTMLFormElement>("#loginbox > form").action = `${redirect}?x-gauntlet-useragent`;
+        document.querySelector<HTMLFormElement>("#loginbox > form").action = `${redirect}?userclick=${Date.now()}&x-gauntlet-useragent`;
         document.querySelector<HTMLInputElement>("#loginbox > form input[name=nation]").value = nation;
         document.querySelector<HTMLInputElement>("#loginbox > form input[name=password]").value = password;
         document.querySelector<HTMLButtonElement>("#loginbox > form button[name=submit]").click();
     } else {
         const loginForm = document.createElement("form");
-        loginForm.action = `${redirect}?x-gauntlet-useragent`;
+        loginForm.action = `${redirect}?userclick=${Date.now()}&x-gauntlet-useragent`;
         loginForm.method = "POST";
         loginForm.target = "_top";
         loginForm.hidden = true;
