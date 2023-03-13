@@ -49,7 +49,7 @@ async function setStorageValue(key: string, value: any): Promise<void>
 
 function getUrlParameters(url: string): object
 {
-    const reg: RegExp = new RegExp('\/([^/]+?)=([^/]+?)(?=\/|$)', 'g');
+    const reg: RegExp = new RegExp('\/([^\/]+?)=([^\/]+?)(?=$|\/)', 'g');
     let params: object = {};
     let match: string[];
     while ((match = reg.exec(url)) !== null)
