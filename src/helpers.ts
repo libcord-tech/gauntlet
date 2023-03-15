@@ -47,6 +47,17 @@ async function setStorageValue(key: string, value: any): Promise<void>
     });
 }
 
+async function removeStorageValue(key: string | string[]): Promise<void>
+{
+    return new Promise((resolve) =>
+    {
+        chrome.storage.local.remove(key, () => 
+        {
+            resolve();
+        })
+    })
+}
+
 function getUrlParameters(url: string): object
 {
     const reg: RegExp = new RegExp('\/([A-Za-z0-9-]+?)=([A-Za-z0-9_.+-]+)', 'g');
