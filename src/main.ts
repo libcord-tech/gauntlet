@@ -345,8 +345,12 @@ const urlParams: object = getUrlParameters(document.URL);
 document.addEventListener('keyup', (e: KeyboardEvent) =>
 {
     const textboxSelected: boolean = document.querySelector('input:focus, textarea:focus') !== null;
-    const key = e.key?.toUpperCase();
-    if (e.altKey || e.ctrlKey || textboxSelected || !key)
+
+    if (!('key' in e))
+        return;
+
+    const key = e.key.toUpperCase();
+    if (e.altKey || e.ctrlKey || textboxSelected)
         return;
     else if (e.shiftKey && (key in keyFunctions) && (keyFunctions[key].modifiedCallback !== null))
         keyFunctions[key].modifiedCallback();
