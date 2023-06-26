@@ -61,9 +61,10 @@ async function removeStorageValue(key: string | string[]): Promise<void>
 function getUrlParameters(url: string): object
 {
     const reg: RegExp = new RegExp('\/([^\/]+?)=([^\/]+?)(?=$|\/)', 'g');
+    const path = new URL(url).pathname;
     let params: object = {};
     let match: string[];
-    while ((match = reg.exec(url)) !== null)
+    while ((match = reg.exec(path)) !== null)
         params[match[1]] = match[2];
     return params;
 }
