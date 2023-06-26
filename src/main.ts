@@ -330,9 +330,9 @@ const keybinds: Keybind[] = [
             const chkInput: HTMLInputElement | null = document.querySelector("input[name=chk]");
 
             if (chkInput) {
-                location.assign(`/page=UN_status?action=leave_UN&chk=${chkInput.value}&submit=1`);
+                location.assign(`/template-overall=none/page=UN_status?action=leave_UN&chk=${chkInput.value}&submit=1`);
             } else {
-                location.assign("/page=un");
+                location.assign("/template-overall=none/page=un");
             }
         },
         modifiedCallback: null
