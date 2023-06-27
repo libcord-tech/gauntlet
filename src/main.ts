@@ -172,7 +172,7 @@ const keybinds: Keybind[] = [
         defaultKey: 'W',
         callback: () => {
             const delegate: HTMLAnchorElement =
-                document.querySelector('#regioncontent > p:nth-child(1) > a') as HTMLAnchorElement;
+                document.querySelector('#regioncontent > p > i.icon-wa ~ a') as HTMLAnchorElement;
             if (urlParams['region'])
                 delegate.click();
             else if (urlParams['nation']) {
