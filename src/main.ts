@@ -336,6 +336,18 @@ const keybinds: Keybind[] = [
             }
         },
         modifiedCallback: null
+    },
+    {
+        functionName: 'closetab',
+        displayName: "Close Current Tab",
+        defaultKey: 'X',
+        callback: () =>
+        {
+            chrome.runtime.sendMessage({command: "closeTab"}, function(response) {
+                console.log(response.result);
+            });
+        },
+        modifiedCallback: null
     }
 ];
 
