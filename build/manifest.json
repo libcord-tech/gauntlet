@@ -4,7 +4,7 @@
   "version": "0.9",
   "description": "Defend easier in NationStates.",
   "author": "Haku",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "tabs"],
   "host_permissions": [
     "https://*.nationstates.net/*"
   ],
