@@ -336,6 +336,16 @@ const keybinds: Keybind[] = [
             }
         },
         modifiedCallback: null
+    },
+    {
+        functionName: 'checkupdatingregions',
+        displayName: "Check Updating Regions",
+        defaultKey: 'G',
+        callback: () =>
+        {
+            window.location.href = '/page=ajax2/a=reports/view=world/filter=change';
+        },
+        modifiedCallback: null
     }
 ];
 
