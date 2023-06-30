@@ -113,6 +113,7 @@ async function addKeySetter(keybind: Keybind)
     disableButton.textContent = "Disable";
     disableButton.classList.add("button");
     disableButton.addEventListener("click", async () => {
+        // set value to `null` to indicate keybind is intentionally disabled
         await setStorageValue(keybind.functionName, null);
 
         // update displayed setting value
@@ -121,6 +122,20 @@ async function addKeySetter(keybind: Keybind)
 
     disableTd.appendChild(disableButton);
     tr.append(disableTd);
+
+    const restoreTd = document.createElement('td');
+    const restoreButton = document.createElement('button');
+    restoreButton.textContent = "Restore Default";
+    restoreButton.classList.add("button");
+    restoreButton.addEventListener("click", async () => {
+        await removeStorageValue(keybind.functionName);
+
+        // update displayed setting value
+        inputElement.value = prettyKey(await getKeybindKey(keybind));
+    });
+
+    restoreTd.appendChild(restoreButton);
+    tr.append(restoreTd);
 
     // Add help text from modifiedCallbackDescription (if any)
     const helpTd = document.createElement("td");
