@@ -5,3 +5,12 @@ chrome.runtime.onInstalled.addListener(({reason}) => {
     });
   }
 })
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.command === "closeTab") {
+    chrome.tabs.remove(sender.tab.id, function() {
+      sendResponse({result: "Tab closed"});
+    });
+    return true;
+  }
+});

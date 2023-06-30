@@ -338,6 +338,16 @@ const keybinds: Keybind[] = [
         modifiedCallback: null
     },
     {
+
+        functionName: 'closetab',
+        displayName: "Close Current Tab",
+        callback: () =>
+        {
+            chrome.runtime.sendMessage({command: "closeTab"});
+        },
+        modifiedCallback: null
+    },
+    {
         functionName: 'checkupdatingregions',
         displayName: "Check Updating Regions",
         defaultKey: 'G',
