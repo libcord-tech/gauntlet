@@ -1,0 +1,17 @@
+[
+  {
+    "id" : 1,
+    "priority": 1,
+    "action": {
+      "type" : "modifyHeaders", 
+      "requestHeaders": [
+        { "header": "User-Agent", "operation": "set", "value": "Gauntlet/0.9 (https://github.com/libcord-tech/gauntlet)" }
+      ]
+    },
+    "condition" : {
+      "urlFilter" : "*?*x-gauntlet-useragent*",
+      "initiatorDomains" : ["www.nationstates.net"],
+      "resourceTypes" : ["main_frame"]
+    }
+  }
+]

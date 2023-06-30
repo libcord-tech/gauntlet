@@ -4,7 +4,7 @@
   "version": "0.9",
   "description": "Defend easier in NationStates.",
   "author": "Haku",
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage", "declarativeNetRequest"],
   "host_permissions": [
     "https://*.nationstates.net/*"
   ],
@@ -72,5 +72,12 @@
   ],
   "background": {
     "service_worker": "scripts/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "rules",
+      "enabled": true,
+      "path": "network/rules.json"
+    }]
   }
 }
