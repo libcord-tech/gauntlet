@@ -397,4 +397,8 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
         currentPage.searchParams.delete("gauntlet-success");
         window.history.replaceState({}, '', currentPage); // use replaceState to avoid page reload
     }
+
+    // remove all query parameters to prevent form re-submission, repeat messages, etc.
+    currentPage.search = "";
+    window.history.replaceState({}, '', currentPage);
 })();
