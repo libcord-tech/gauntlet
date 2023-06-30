@@ -271,25 +271,29 @@ const keybinds: Keybind[] = [
                 if (resendButton !== null)
                     resendButton.click();
                 else
-                    window.location.href = `/template-overall=none/region=${jumpPoint}`;
+                    window.location.href = `/region=${jumpPoint}`;
             }
             else if (urlParams['region'] === jumpPoint && moveButton !== null)
                 moveButton.click();
             else if (urlParams['page'] === 'change_region' || (urlParams['region'] && moveButton === null)) {
-                if (currentSwitcher === (switchers.length - 1)) {
-                    await setStorageValue('currentswitcher', 0);
-                    window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[0]}&password=${password}&logging_in=1`;
-                }
-                else {
-                    await setStorageValue('currentswitcher', currentSwitcher + 1);
-                    window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1`;
-                }
+                const nextSwitcher = currentSwitcher === (switchers.length - 1) ? 0 : currentSwitcher + 1;
+                await setStorageValue('currentswitcher', nextSwitcher);
+                if (document.querySelector("#loginbox"))
+                    login(switchers[nextSwitcher], password);
+                else
+                    location.assign("/page=blank/gauntlet=login");
+            }
+            else if (urlParams["gauntlet"] === "login") {
+                login(switchers[currentSwitcher], password);
+            }
+            else if (urlParams["nation"] === canonicalize(switchers[currentSwitcher]) && document.body.dataset?.nname === switchers[currentSwitcher]) {
+                location.assign("/template-overall=none/page=un");
+            }
+            else if (document.querySelector("#loginbox")) {
+                login(switchers[currentSwitcher], password);
             }
             else {
-                window.location.href =
-                    `/template-overall=none/page=un?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1`;
+                location.assign("/page=blank/gauntlet=login");
             }
         },
         modifiedCallback: async () =>
