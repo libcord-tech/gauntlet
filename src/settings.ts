@@ -108,6 +108,20 @@ async function addKeySetter(keybind: Keybind)
     tr.appendChild(td1);
     tr.appendChild(td2);
 
+    const disableTd = document.createElement('td');
+    const disableButton = document.createElement('button');
+    disableButton.textContent = "Disable";
+    disableButton.classList.add("button");
+    disableButton.addEventListener("click", async () => {
+        await setStorageValue(keybind.functionName, null);
+
+        // update displayed setting value
+        inputElement.value = prettyKey(await getKeybindKey(keybind));
+    });
+
+    disableTd.appendChild(disableButton);
+    tr.append(disableTd);
+
     // Add help text from modifiedCallbackDescription (if any)
     const helpTd = document.createElement("td");
     if (keybind.modifiedCallbackDescription) {
@@ -177,7 +191,7 @@ async function setScrollToBottom(e: MouseEvent): Promise<void>
 
     // move modal element for z-order purposes to the body
     // (otherwise, it won't cover the actual page)
-    modal = document.body.appendChild(modal);    
+    modal = document.body.appendChild(modal);
 
     // modal close button
     document.querySelector('.modal .close').addEventListener('click', (e) => {
@@ -190,5 +204,5 @@ async function setScrollToBottom(e: MouseEvent): Promise<void>
             modal.style.display = "none";
     });
 
-    
+
 })();
