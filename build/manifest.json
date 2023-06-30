@@ -62,6 +62,12 @@
       "run_at": "document_idle",
       "js": [],
       "css": ["css/notemplate.css"]
+    },
+    {
+      "matches": ["https://www.nationstates.net/nation=*", "https://www.nationstates.net/template-overall=none/nation=*"],
+      "exclude_matches": ["https://forum.nationstates.net/*"],
+      "run_at": "document_idle",
+      "js": ["scripts/nation.js"]
     }
   ],
   "background": {

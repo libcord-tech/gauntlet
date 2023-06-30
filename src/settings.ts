@@ -39,6 +39,11 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 </tbody>
 </table>
 </fieldset>
+<fieldset>
+<legend>Automatically Scroll To Bottom of Nation Pages</legend>
+<input type="checkbox" id="scroll-to-bottom">
+<input type="button" class="button" id="set-scroll-to-bottom" value="Set">
+</fieldset>
 <div id="keybind-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -135,6 +140,12 @@ async function setSwitchers(e: MouseEvent): Promise<void>
     await setStorageValue('switchers', switchers);
 }
 
+async function setScrollToBottom(e: MouseEvent): Promise<void>
+{
+    const scrollToBottom: boolean = (document.querySelector('#scroll-to-bottom') as HTMLInputElement).checked;
+    await setStorageValue('scrollToBottom', scrollToBottom);
+}
+
 (async () =>
 {
     // Set up the keybind setting form
@@ -152,11 +163,14 @@ async function setSwitchers(e: MouseEvent): Promise<void>
             switchersList.value += `${switchers[i]}\n`;
         }
     }
+    (document.querySelector('#scroll-to-bottom') as HTMLInputElement).checked =
+        await getStorageValue('scrollToBottom') ?? false;
 
     // Other settings
     document.querySelector('#set-jump-point').addEventListener('click', setJumpPoint);
     document.querySelector('#set-prep-password').addEventListener('click', setPassword);
     document.querySelector('#set-switchers').addEventListener('click', setSwitchers);
+    document.querySelector('#set-scroll-to-bottom').addEventListener('click', setScrollToBottom);
 
     // set up modal
     let modal = document.getElementById('keybind-modal');
