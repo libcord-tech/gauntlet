@@ -22,7 +22,9 @@ function prettyKey(item?: string)
 async function getKeybindKey(keybind: Keybind): Promise<string | null>
 {
     var storedVal = await getStorageValue(keybind.functionName);
-    return <string>storedVal || keybind.defaultKey;
+    // `undefined` indicates value not initialized
+    // `null` is used for an intentionally unset value (i.e. to disable a keybind)
+    return storedVal === undefined ? keybind.defaultKey : <string>storedVal;
 }
 
 async function getStorageValue(key: string): Promise<any>
@@ -51,7 +53,7 @@ async function removeStorageValue(key: string | string[]): Promise<void>
 {
     return new Promise((resolve) =>
     {
-        chrome.storage.local.remove(key, () => 
+        chrome.storage.local.remove(key, () =>
         {
             resolve();
         })
@@ -78,16 +80,16 @@ async function crossEndoDoss(endo: boolean)
         // ignore non-World Assembly happenings
         if (!li.textContent.includes("World Assembly"))
             return;
-        
+
         const nationName = canonicalize(li.querySelector('.nnameblock').textContent);
 
         // only check the most recent World Assembly happening for each nation
         if (processedNations.has(nationName))
             return;
-        
+
         if (li.textContent.includes("was admitted"))
             nations.push(nationName);
-        
+
         processedNations.add(nationName);
     });
 
