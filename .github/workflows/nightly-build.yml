@@ -37,6 +37,12 @@ jobs:
           release_name: Nightly Build ${{ github.sha }}
           draft: false
           prerelease: true
+          body: |
+            ⚠️ Gauntlet Nightly - Unstable Release ⚠️
+            
+            This is a nightly build generated from the latest code. It is provided for users who are fine with bugs and want to have the latest features. It may contain bugs and incomplete features. Use it at your own risk.
+            
+            For the latest stable release, please look at the [Releases](https://github.com/libcord-tech/gauntlet/releases/latest) page.
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
