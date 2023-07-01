@@ -15,9 +15,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Install dependencies
         run: npm ci
@@ -40,9 +40,9 @@ jobs:
           prerelease: true
           body: |
             ⚠️ Gauntlet Nightly - Unstable Release ⚠️
-            
+
             This is a nightly build generated from the latest code. It is provided for users who are fine with bugs and want to have the latest features. It may contain bugs and incomplete features. Use it at your own risk.
-            
+
             For the latest stable release, please look at the [Releases](https://github.com/libcord-tech/gauntlet/releases/latest) page.
 
       - name: Upload Release Asset
