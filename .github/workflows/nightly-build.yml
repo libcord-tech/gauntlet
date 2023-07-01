@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: nightly-${{ github.sha }}
-          release_name: Nightly Build ${{ github.sha }}
+          release_name: Gauntlet Nightly ${{ github.sha }}
           draft: false
           prerelease: true
           body: |
