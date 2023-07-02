@@ -338,7 +338,6 @@ const keybinds: Keybind[] = [
         modifiedCallback: null
     },
     {
-
         functionName: 'closetab',
         displayName: "Close Current Tab",
         callback: () =>
@@ -354,6 +353,16 @@ const keybinds: Keybind[] = [
         callback: () =>
         {
             window.location.href = '/page=ajax2/a=reports/view=world/filter=change';
+        },
+        modifiedCallback: null
+    },
+    {
+        functionName: 'joinwa',
+        displayName: "Confirm joining World Assembly",
+        defaultKey: 'ENTER',
+        callback: () =>
+        {
+            document.querySelector<HTMLButtonElement>("form[action='/cgi-bin/join_un.cgi'] button[type='submit']").click()
         },
         modifiedCallback: null
     }
