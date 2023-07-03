@@ -266,7 +266,6 @@ const keybinds: Keybind[] = [
             const currentSwitcher: number = await getStorageValue('currentswitcher');
 
             const startPage = getStorageValue('prepDossClear') ? 'dossier' : 'un';
-            console.log(startPage);
 
             if (urlParams['page'] === 'dossier' && urlParams['template-overall'] === 'none') {
                 if (document.querySelector('button[name="clear_dossier"]'))
