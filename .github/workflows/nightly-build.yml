@@ -30,28 +30,17 @@ jobs:
         run: zip -r gauntlet-nightly.zip build/
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: nightly-${{ github.sha }}
-          release_name: Gauntlet Nightly ${{ github.sha }}
-          draft: false
-          prerelease: true
+          artifacts: "gauntlet-nightly.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: nightly-${{ github.sha }}
+          name: Gauntlet Nightly ${{ github.sha }}
           body: |
             ⚠️ Gauntlet Nightly - Unstable Release ⚠️
 
             This is a nightly build generated from the latest code. It is provided for users who are fine with bugs and want to have the latest features. It may contain bugs and incomplete features. Use it at your own risk.
 
             For the latest stable release, please look at the [Releases](https://github.com/libcord-tech/gauntlet/releases/latest) page.
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./gauntlet-nightly.zip
-          asset_name: gauntlet-nightly.zip
-          asset_content_type: application/zip
+          draft: false
+          prerelease: true
