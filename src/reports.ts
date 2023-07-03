@@ -16,5 +16,5 @@
     document.body.insertBefore(button, document.querySelector('h1').nextSibling);
 
     const loadTime = (performance.getEntriesByName(location.href, 'navigation')[0] as PerformanceNavigationTiming).domContentLoadedEventEnd;
-    document.querySelector("h1").textContent += ` (${loadTime.toFixed(2)} ms)`
+    document.querySelector("h1").textContent += ` (${Math.round(loadTime)} ms)`;
 })();
