@@ -264,7 +264,20 @@ const keybinds: Keybind[] = [
                 return;
             }
             const currentSwitcher: number = await getStorageValue('currentswitcher');
-            if (urlParams['page'] === 'un' && urlParams['template-overall'] === 'none')
+
+            const startPage = getStorageValue('prepDossClear') ? 'dossier' : 'un';
+            console.log(startPage);
+
+            if (urlParams['page'] === 'dossier' && urlParams['template-overall'] === 'none') {
+                if (document.querySelector('button[name="clear_dossier"]'))
+                {
+                    const chk = document.querySelector<HTMLInputElement>('input[name="chk"]').value;
+                    location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1`);
+                }
+                else
+                    location.assign(`/template-overall=none/page=un`);
+            }
+            else if (urlParams['page'] === 'un' && urlParams['template-overall'] === 'none')
                 (document.querySelector('button[type=submit]') as HTMLButtonElement).click();
             else if (urlParams['page'] === 'UN_status') {
                 const resendButton = document.querySelector('body > p.error > a') as HTMLAnchorElement;
@@ -279,17 +292,17 @@ const keybinds: Keybind[] = [
                 if (currentSwitcher === (switchers.length - 1)) {
                     await setStorageValue('currentswitcher', 0);
                     window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[0]}&password=${password}&logging_in=1`;
+                        `/template-overall=none/page=${startPage}?nation=${switchers[0]}&password=${password}&logging_in=1`;
                 }
                 else {
                     await setStorageValue('currentswitcher', currentSwitcher + 1);
                     window.location.href =
-                        `/template-overall=none/page=un?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1`;
+                        `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1`;
                 }
             }
             else {
                 window.location.href =
-                    `/template-overall=none/page=un?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1`;
+                    `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1`;
             }
         },
         modifiedCallback: async () =>
