@@ -356,6 +356,22 @@ const keybinds: Keybind[] = [
             window.location.href = '/page=ajax2/a=reports/view=world/filter=change';
         },
         modifiedCallback: null
+    },
+    {
+        functionName: 'cleardossier',
+        displayName: "View/Clear Dossier",
+        defaultKey: 'X',
+        callback: () =>
+        {
+            if (urlParams['page'] === 'dossier')
+            {
+                const chk = document.querySelector<HTMLInputElement>('input[name="chk"]').value;
+                location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1`);
+            }
+            else
+                location.assign('/template-overall=none/page=dossier');
+        },
+        modifiedCallback: null
     }
 ];
 
