@@ -29,13 +29,17 @@ jobs:
       - name: Zip build directory
         run: zip -r gauntlet-nightly.zip build/
 
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H%M')"
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "gauntlet-nightly.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: nightly-${{ github.sha }}
-          name: Gauntlet Nightly ${{ github.sha }}
+          tag: nightly-${{ steps.date.outputs.date }}
+          name: Gauntlet Nightly ${{ steps.date.outputs.date }}
           body: |
             ⚠️ Gauntlet Nightly - Unstable Release ⚠️
 
