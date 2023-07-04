@@ -44,7 +44,8 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 <input type="checkbox" id="scroll-to-bottom">
 <input type="button" class="button" id="set-scroll-to-bottom" value="Set">
 </fieldset>
-<legend>Automatically Scroll To Bottom of Nation Pages</legend>
+<fieldset>
+<legend>Clear Dossier During Prep</legend>
 <input type="checkbox" id="prep-doss-clear">
 <input type="button" class="button" id="set-prep-doss-clear" value="Set">
 </fieldset>
