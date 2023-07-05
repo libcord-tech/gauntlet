@@ -44,6 +44,11 @@ document.querySelector('#content').innerHTML = `<h1>Gauntlet Settings</h1>
 <input type="checkbox" id="scroll-to-bottom">
 <input type="button" class="button" id="set-scroll-to-bottom" value="Set">
 </fieldset>
+<fieldset>
+<legend>Clear Dossier During Prep</legend>
+<input type="checkbox" id="prep-doss-clear">
+<input type="button" class="button" id="set-prep-doss-clear" value="Set">
+</fieldset>
 <div id="keybind-modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -175,6 +180,12 @@ async function setScrollToBottom(e: MouseEvent): Promise<void>
     await setStorageValue('scrollToBottom', scrollToBottom);
 }
 
+async function setPrepDossClear(e: MouseEvent): Promise<void>
+{
+    const prepDossClear: boolean = (document.querySelector('#prep-doss-clear') as HTMLInputElement).checked;
+    await setStorageValue('prepDossClear', prepDossClear);
+}
+
 (async () =>
 {
     // Set up the keybind setting form
@@ -194,12 +205,15 @@ async function setScrollToBottom(e: MouseEvent): Promise<void>
     }
     (document.querySelector('#scroll-to-bottom') as HTMLInputElement).checked =
         await getStorageValue('scrollToBottom') ?? false;
+    (document.querySelector('#prep-doss-clear') as HTMLInputElement).checked =
+        await getStorageValue('prepDossClear') ?? false;
 
     // Other settings
     document.querySelector('#set-jump-point').addEventListener('click', setJumpPoint);
     document.querySelector('#set-prep-password').addEventListener('click', setPassword);
     document.querySelector('#set-switchers').addEventListener('click', setSwitchers);
     document.querySelector('#set-scroll-to-bottom').addEventListener('click', setScrollToBottom);
+    document.querySelector('#set-prep-doss-clear').addEventListener('click', setPrepDossClear);
 
     // set up modal
     let modal = document.getElementById('keybind-modal');
