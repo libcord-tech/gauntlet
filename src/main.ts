@@ -318,11 +318,19 @@ const keybinds: Keybind[] = [
     },
     {
         functionName: 'resign',
-        displayName: "Resign from WA",
+        displayName: "Resign from or join WA",
         defaultKey: "'",
         callback: () => {
+            // if on join confirmation page
+            if (urlParams['page'] === "join_WA") {
+                document
+                    .querySelector<HTMLButtonElement>("form[action='/cgi-bin/join_un.cgi'] button[type='submit']")
+                    .click()
+                return;
+            }
+
             // if not a WA member
-            if (urlParams['page'] === 'un' && document.querySelector("input[value='join_UN']")) {
+            else if (urlParams['page'] === 'un' && document.querySelector("input[value='join_UN']")) {
                 notyf.error("It doesn't seem like you're in the WA.");
                 return;
             }
@@ -353,16 +361,6 @@ const keybinds: Keybind[] = [
         callback: () =>
         {
             window.location.href = '/page=ajax2/a=reports/view=world/filter=change';
-        },
-        modifiedCallback: null
-    },
-    {
-        functionName: 'joinwa',
-        displayName: "Confirm joining World Assembly",
-        defaultKey: 'ENTER',
-        callback: () =>
-        {
-            document.querySelector<HTMLButtonElement>("form[action='/cgi-bin/join_un.cgi'] button[type='submit']").click()
         },
         modifiedCallback: null
     }
