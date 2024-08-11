@@ -23,15 +23,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
-      - name: Zip build directory
-        run: zip -r gauntlet-nightly.zip build/
-
       - name: Get current date
         id: date
         run: echo "DATE=$(date +'%Y-%m-%d-%H%M')" >> $GITHUB_ENV
+
+      - name: Get current named version
+        run: echo "VERSION=$(jq --raw-output '.version' build/manifest.json)" >> $GITHUB_ENV
+
+      - name: Build
+        run: npm run build
+
+      - name: Patch version name
+        run: jq ".version_name = \"$VERSION-$DATE\"" build/manifest.json > build/manifest.json.tmp && mv build/manifest.json.tmp build/manifest.json && rm -f build/manifest.json.tmp
+
+      - name: Zip build directory
+        run: zip -r gauntlet-nightly.zip build/
 
       - name: Create Release
         uses: ncipollo/release-action@v1

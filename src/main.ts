@@ -17,7 +17,8 @@ let notyf = new Notyf({
     }
 });
 
-const { version } = chrome.runtime.getManifest();
+const manifest = chrome.runtime.getManifest();
+const version = manifest.version_name || manifest.version;
 const scriptIdentifier = `Gauntlet/${version} (by:Gauntlet authors https://github.com/libcord-tech/gauntlet/graphs/contributors)`;
 
 const keybinds: Keybind[] = [
@@ -79,7 +80,10 @@ const keybinds: Keybind[] = [
                     }
                     nationsToEndorse.splice(nationsToEndorse.indexOf(urlParams['nation']), 1);
                     await setStorageValue('nationstoendorse', nationsToEndorse);
-                    window.location.href = `/template-overall=none/nation=${nextNation}?`;
+                    window.location.href = `/template-overall=none/nation=${nextNation}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
                 }
             }
         },
