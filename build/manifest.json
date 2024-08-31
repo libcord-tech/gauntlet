@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Gauntlet",
-  "version": "0.9",
+  "version": "0.10",
   "description": "Defend easier in NationStates.",
   "author": "Haku",
   "permissions": ["activeTab", "storage", "tabs"],
