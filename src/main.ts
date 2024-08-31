@@ -17,6 +17,10 @@ let notyf = new Notyf({
     }
 });
 
+const manifest = chrome.runtime.getManifest();
+const version = manifest.version_name || manifest.version;
+const scriptIdentifier = `Gauntlet/${version} (by:Gauntlet authors https://github.com/libcord-tech/gauntlet/graphs/contributors)`;
+
 const keybinds: Keybind[] = [
     {
         functionName: 'move',
@@ -76,7 +80,10 @@ const keybinds: Keybind[] = [
                     }
                     nationsToEndorse.splice(nationsToEndorse.indexOf(urlParams['nation']), 1);
                     await setStorageValue('nationstoendorse', nationsToEndorse);
-                    window.location.href = `/template-overall=none/nation=${nextNation}`;
+                    window.location.href = `/template-overall=none/nation=${nextNation}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
                 }
             }
         },
@@ -127,7 +134,10 @@ const keybinds: Keybind[] = [
                     }
                     nationsToDossier.splice(nationsToDossier.indexOf(urlParams['nation']), 1);
                     await setStorageValue('nationstodossier', nationsToDossier);
-                    window.location.href = `/template-overall=none/nation=${nextNation}`;
+                    window.location.href = `/template-overall=none/nation=${nextNation}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
                 }
             }
             else if (urlParams['page'] === 'dossier') {
@@ -144,7 +154,10 @@ const keybinds: Keybind[] = [
                 }
                 nationsToDossier.splice(nationsToDossier.indexOf(currentNation), 1);
                 await setStorageValue('nationstodossier', nationsToDossier);
-                window.location.href = `/template-overall=none/nation=${nextNation}`;
+                window.location.href = `/template-overall=none/nation=${nextNation}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             }
         },
         modifiedCallbackDescription: "save nations to doss from a region activity page and then cycle through those nations and doss them"
@@ -160,7 +173,10 @@ const keybinds: Keybind[] = [
             if ((urlParams['region'] === jumpPoint) && moveButton)
                 moveButton.click();
             else if (urlParams['region'] !== jumpPoint)
-                window.location.href = `/template-overall=none/region=${jumpPoint}`;
+                window.location.href = `/template-overall=none/region=${jumpPoint}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             else
                 notyf.error("No move button found. Are you already in your jump point?");
         },
@@ -203,9 +219,15 @@ const keybinds: Keybind[] = [
         defaultKey: 'T',
         callback: () => {
             if (urlParams['template-overall'])
-                window.location.href = document.URL.replace('template-overall=none/', '');
+                window.location.href = document.URL.replace('template-overall=none/', '') + "?" + new URLSearchParams({
+                    script: scriptIdentifier,
+                    userclick: Date.now().toString(),
+                }).toString();
             else {
-                window.location.href = `/template-overall=none/${document.URL.replace('https://www.nationstates.net/', '')}`;
+                window.location.href = `/template-overall=none/${document.URL.replace('https://www.nationstates.net/', '')}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             }
         },
         modifiedCallback: null
@@ -241,7 +263,10 @@ const keybinds: Keybind[] = [
         callback: () => {
             if (urlParams['region']) {
                 window.location.href =
-                    `/page=ajax2/a=reports/view=region.${urlParams['region']}/filter=move+member+endo`;
+                    `/page=ajax2/a=reports/view=region.${urlParams['region']}/filter=move+member+endo?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             } else {
                 notyf.error("Could not load region activity. Are you viewing a region page?")
             }
@@ -271,10 +296,16 @@ const keybinds: Keybind[] = [
                 if (document.querySelector('button[name="clear_dossier"]'))
                 {
                     const chk = document.querySelector<HTMLInputElement>('input[name="chk"]').value;
-                    location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1`);
+                    location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`);
                 }
                 else
-                    location.assign(`/template-overall=none/page=un`);
+                    location.assign(`/template-overall=none/page=un?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`);
             }
             else if (urlParams['page'] === 'un' && urlParams['template-overall'] === 'none')
                 (document.querySelector('button[type=submit]') as HTMLButtonElement).click();
@@ -283,7 +314,10 @@ const keybinds: Keybind[] = [
                 if (resendButton !== null)
                     resendButton.click();
                 else
-                    window.location.href = `/template-overall=none/region=${jumpPoint}`;
+                    window.location.href = `/template-overall=none/region=${jumpPoint}?${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             }
             else if (urlParams['region'] === jumpPoint && moveButton !== null)
                 moveButton.click();
@@ -291,17 +325,26 @@ const keybinds: Keybind[] = [
                 if (currentSwitcher === (switchers.length - 1)) {
                     await setStorageValue('currentswitcher', 0);
                     window.location.href =
-                        `/template-overall=none/page=${startPage}?nation=${switchers[0]}&password=${password}&logging_in=1`;
+                        `/template-overall=none/page=${startPage}?nation=${switchers[0]}&password=${password}&logging_in=1&${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
                 }
                 else {
                     await setStorageValue('currentswitcher', currentSwitcher + 1);
                     window.location.href =
-                        `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1`;
+                        `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher + 1]}&password=${password}&logging_in=1&${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
                 }
             }
             else {
                 window.location.href =
-                    `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1`;
+                    `/template-overall=none/page=${startPage}?nation=${switchers[currentSwitcher]}&password=${password}&logging_in=1&${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`;
             }
         },
         modifiedCallback: async () =>
@@ -350,7 +393,10 @@ const keybinds: Keybind[] = [
             const chkInput: HTMLInputElement | null = document.querySelector("input[name=chk]");
 
             if (chkInput) {
-                location.assign(`/template-overall=none/page=UN_status?action=leave_UN&chk=${chkInput.value}&submit=1`);
+                location.assign(`/template-overall=none/page=UN_status?action=leave_UN&chk=${chkInput.value}&submit=1&${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`);
             } else {
                 location.assign("/template-overall=none/page=un");
             }
@@ -385,7 +431,10 @@ const keybinds: Keybind[] = [
             if (urlParams['page'] === 'dossier')
             {
                 const chk = document.querySelector<HTMLInputElement>('input[name="chk"]').value;
-                location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1`);
+                location.assign(`/template-overall=none/page=dossier?chk=${chk}&clear_dossier=1&${new URLSearchParams({
+                        script: scriptIdentifier,
+                        userclick: Date.now().toString(),
+                    }).toString()}`);
             }
             else
                 location.assign('/template-overall=none/page=dossier');
@@ -396,6 +445,7 @@ const keybinds: Keybind[] = [
 
 let keyFunctions: object = {};
 const urlParams: object = getUrlParameters(document.URL);
+let keybindActive = false; // whether a keybind is currently active
 
 document.addEventListener('keyup', (e: KeyboardEvent) =>
 {
@@ -404,13 +454,22 @@ document.addEventListener('keyup', (e: KeyboardEvent) =>
     if (!('key' in e))
         return;
 
+    if (keybindActive)
+        return;
+
     const key = e.key.toUpperCase();
     if (e.altKey || e.ctrlKey || textboxSelected)
         return;
-    else if (e.shiftKey && (key in keyFunctions) && (keyFunctions[key].modifiedCallback !== null))
+    else if (e.shiftKey && (key in keyFunctions) && (keyFunctions[key].modifiedCallback !== null)) {
+        keybindActive = true;
         keyFunctions[key].modifiedCallback();
-    else if (key in keyFunctions)
+        keybindActive = false;
+    }
+    else if (key in keyFunctions) {
+        keybindActive = true;
         keyFunctions[key].callback();
+        keybindActive = false;
+    }
 });
 
 (async () =>
